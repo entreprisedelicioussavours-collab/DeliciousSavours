@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carte-Cadeau Delicious Savours</title>
+<style>
+body { font-family: Arial, sans-serif; background-color: #fff7e6; margin:0; padding:0; }
+.container { max-width: 500px; margin: 50px auto; padding: 20px; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+h1 { text-align: center; color: #228B22; margin-bottom: 20px; }
+p { font-size: 16px; line-height: 1.5; color: #333; text-align: center; }
+input[type="text"], input[type="email"], input[type="tel"] { width: 100%; padding: 12px; margin: 8px 0; border-radius: 5px; border: 1px solid #ccc; }
+button { width: 100%; background-color: #228B22; color: #fff; padding: 14px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-top: 10px; }
+button:hover { background-color: #196619; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🎁 Recevez votre Carte-Cadeau Delicious Savours</h1>
+<p>Entrez votre e-mail et numéro WhatsApp pour obtenir votre jus d’ananas gratuit et guide santé anti-douleur !</p>
+
+<form id="delicious-form">
+<input type="text" name="name" placeholder="Votre nom complet" required>
+<input type="email" name="email" placeholder="Votre e-mail" required>
+<input type="tel" name="whatsapp" placeholder="Votre numéro WhatsApp" required>
+<button type="submit">Recevoir mon Cadeau</button>
+</form>
+</div>
+
+<script>
+// --- CONFIGURATION --- //
+const endpoint = "https://script.google.com/macros/s/VOTRE_SCRIPT_ID/exec"; // Remplace par ton webhook
+const redirectURL = "https://votre-lien-cpa.com"; // Remplace par ton lien CPA
+
+document.getElementById("delicious-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    // Transforme FormData en objet simple
+    const payload = {};
+    formData.forEach((value, key) => { payload[key] = value; });
+
+    // Envoi au webhook
+    fetch(endpoint, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" }
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = redirectURL; // Redirection CPA
+        } else {
+            alert("Erreur lors de l'envoi, réessayez.");
+        }
+    })
+    .catch(error => { alert("Erreur réseau, veuillez réessayer."); });
+});
+</script>
+</body>
+</html>
